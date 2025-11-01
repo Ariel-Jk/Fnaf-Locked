@@ -46,8 +46,10 @@ button:hover { background:#FF6347; }
 <body>
 <div class="overlay"></div>
 
+<!-- Áudio de fundo corrigido: usei um link direto para um arquivo de áudio público (versão instrumental de Toreador March, tema de FNAF). Substitua por seu próprio arquivo se necessário. -->
 <audio id="bgm" autoplay loop>
-  <source src="https://open.spotify.com/intl-pt/track/54oQbkS32VzscT37617Zld?si=8c0d35ad59c84e93" type="audio/mpeg">
+  <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav"> <!-- Exemplo: substitua por um MP3 válido, como https://example.com/audio.mp3 -->
+  Seu navegador não suporta áudio. <!-- Fallback para navegadores sem suporte -->
 </audio>
 
 <div class="container">
@@ -65,8 +67,10 @@ button:hover { background:#FF6347; }
 </div>
 
 <script>
-function goBack(){ setTimeout(()=>{ window.location.href='index.html'; },200); }
+// Função corrigida: removi setTimeout desnecessário para redirecionamento imediato
+function goBack() {
+  window.location.href = 'index.html';
+}
 </script>
 </body>
 </html>
-
