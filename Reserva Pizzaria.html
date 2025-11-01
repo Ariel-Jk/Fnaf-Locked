@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservar Festa - Freddy's Fazbear Pizza</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;color:#fff;background:url('https://i.pinimg.com/1200x/92/4f/72/924f726a442dcae75c9cb67f2e0ff3cd.jpg') center/cover no-repeat fixed;}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:0;}
+.container{position:relative;z-index:1;padding:60px 20px;max-width:500px;margin:0 auto;text-align:center;}
+h1{font-size:2.5rem;margin-bottom:30px;text-shadow:0 0 15px #000;}
+form{display:flex;flex-direction:column;gap:15px;}
+input{padding:12px;border-radius:8px;border:none;font-size:1rem;}
+input::placeholder{color:#555;}
+button{padding:14px;font-size:1rem;border:none;border-radius:8px;background:#FF4500;color:#fff;cursor:pointer;transition:0.3s;}
+button:hover{background:#FF6347;}
+#msg{margin-top:20px;font-weight:600;color:#FFD700;text-shadow:0 0 10px #000;}
+</style>
+</head>
+<body>
+<div class="overlay"></div>
+
+<audio id="bgm" loop>
+  <source src="https://open.spotify.com/intl-pt/track/54oQbkS32VzscT37617Zld?si=5539497ef50c4315" type="audio/mpeg">
+</audio>
+<!-- Botão opcional para iniciar áudio manualmente, caso autoplay falhe -->
+
+<div class="container">
+  <h1>🎈 Reserve sua Festa 🎈</h1>
+  <form id="form">
+    <input type="text" id="nome" placeholder="Nome completo do responsável" required>
+    <!-- Mudança: type="text" para permitir formato dd/mm -->
+    <input type="text" id="data" placeholder="Data (dd/mm)" required>
+    <input type="text" id="ani" placeholder="Nome do(a) aniversáriante" required>
+    <input type="number" id="pessoas" placeholder="Nº de convidados" min="1">
+    <button type="submit">Enviar Reserva</button>
+  </form>
+  <div id="msg"></div>
+  <button onclick="goBack()">⬅ Voltar</button>
+</div>
+
+<script>
+// Função para tentar autoplay do áudio; se falhar, mostra botão
+const audio = document.getElementById('bgm');
+const playButton = document.getElementById('playAudio');
+audio.play().catch(() => {
+  playButton.style.display = 'block';
+  playButton.addEventListener('click', () => {
+    audio.play();
+    playButton.style.display = 'none';
+  });
+});
+
+document.getElementById("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const nome = document.getElementById("nome").value.trim().toLowerCase();
+  const data = document.getElementById("data").value.trim();
+  const ani = document.getElementById("ani").value.trim();
+  const msg = document.getElementById("msg");
+
+  // Validação básica: Verificar formato da data (dd/mm)
+  const dataRegex = /^\d{2}\/\d{2}$/;
+  if (!dataRegex.test(data)) {
+    msg.textContent = "❌ Formato de data inválido! Use dd/mm (ex.: 02/11).";
+    return;
+  }
+
+  // Verificar se campos obrigatórios estão preenchidos
+  if (!nome || !ani) {
+    msg.textContent = "❌ Preencha todos os campos obrigatórios!";
+    return;
+  }
+
+  // Condição especial (mantida como estava, mas agora funciona com type="text")
+  if (nome === "yolanda garcía" && data === "02/11" && ani === "Teodora Makaria García") {
+    msg.textContent = "🎂 Redirecionando para sua página especial...";
+    setTimeout(() => { window.location.href = "PPcode.html"; }, 2000);
+  } else {
+    msg.textContent = "🍕 Sua reserva foi recebida! Freddy está preparando o bolo!";
+  }
+});
+
+// Aumento do timeout para transição mais suave
+function goBack() { setTimeout(() => { window.location.href = 'Entrada.html'; }, 500); }
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galeria - Freddy's Fazbear Pizza</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Poppins', sans-serif;
+  color:#fff;
+  background: url('https://i.pinimg.com/736x/be/1f/de/be1fdeffabfad3f1b52767e1b2a1ef0e.jpg') center/cover no-repeat fixed;
+}
+.overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:0; }
+.container { position:relative; z-index:1; padding:60px 20px; max-width:1200px; margin:0 auto; }
+h1 { text-align:center; font-size:2.5rem; margin-bottom:40px; text-shadow: 0 0 15px #000; }
+.gallery {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+.gallery img {
+  width:100%;
+  border-radius:12px;
+  box-shadow: 0 0 20px #ff4500;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor:pointer;
+}
+.gallery img:hover { transform:scale(1.05); box-shadow:0 0 30px #FFD700; }
+button {
+  display:block;
+  margin:40px auto 0;
+  padding:12px 25px;
+  font-size:1rem;
+  color:#fff;
+  background:#FF4500;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover { background:#FF6347; }
+</style>
+</head>
+<body>
+<div class="overlay"></div>
+
+<audio id="bgm" autoplay loop>
+  <source src="https://open.spotify.com/intl-pt/track/54oQbkS32VzscT37617Zld?si=8c0d35ad59c84e93" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1>📸 Galeria da Pizzaria</h1>
+  <div class="gallery">
+    <img src="https://i.pinimg.com/736x/ed/7b/34/ed7b343e97b8f4032d1210b53fe4963b.jpg" alt="Animatrônico Freddy">
+    <img src="https://i.pinimg.com/736x/a0/5c/1f/a05c1f710bc71bfe90a5ed1cdd94d8ee.jpg" alt="Animatrônico Bonnie">
+    <img src="https://i.pinimg.com/736x/1f/17/9a/1f179a66974f5fb53f1a9ff7d83d529a.jpg" alt="Animatrônico Chica">
+    <img src="https://i.pinimg.com/736x/95/ec/18/95ec18b6605548043d60f6cb08ed8661.jpg" alt="Animatrônico Foxy">
+    <img src="https://i.pinimg.com/1200x/c5/10/e5/c510e58860b8a0f04b8e027b150c2047.jpg" alt="Bolo de Aniversário">
+    <img src="https://i.pinimg.com/736x/bd/67/d2/bd67d2adaa0a82b95765277b20641830.jpg" alt="Salão de festa">
+    <img src="https://i.pinimg.com/736x/65/8a/d4/658ad4a540ab867b2085ccdff0e8acd5.jpg" alt="Frente do Local">
+  </div>
+  <button onclick="goBack()">⬅ Voltar</button>
+</div>
+
+<script>
+function goBack(){ setTimeout(()=>{ window.location.href='Entrada.html'; },200); }
+</script>
+</body>
+</html>

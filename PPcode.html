@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Locked</title>
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#0b0b0b;
+      --btn:#E6E6FA;
+      --btn-hover:#D3D3D3;
+      --accent:#006400;
+      --text:#000000;
+    }
+
+    html,body{height:100%;margin:0;padding:0;}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* imagem de fundo */
+    body::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:url('https://i.pinimg.com/1200x/7c/5a/be/7c5abec4b0d668fd14d6656f4068b65e.jpg') no-repeat center center/cover;
+      opacity:0.0092;
+      z-index:0;
+    }
+
+    main.container{
+      position:relative;
+      z-index:1;
+    }
+
+    .display{
+      height:64px;
+      width:350px;
+      background:var(--panel);
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:32px;
+      letter-spacing:8px;
+      margin-bottom:18px;
+      user-select:none;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;1
+    }
+
+    button.key{
+      background:var(--btn);
+      border:1px solid rgba(255,255,255,0.03);
+      height:64px;
+      border-radius:12px;
+      font-size:24px;
+      color:var(--text);
+      cursor:pointer;
+      transition:transform .08s ease, background .08s;
+    }
+
+    button.key:active{transform:translateY(2px) scale(.995)}
+    button.key:hover{background:var(--btn-hover)}
+
+    .small{
+      font-size:12px;
+      color:#9a9a9a;
+      margin-top:10px;
+      text-align:center;
+    }
+
+    @media (max-width:420px){
+      .container{width:92vw}
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="application" aria-label="Teclado numérico">
+    <div class="display" id="display" aria-live="polite">----</div>
+
+    <div class="grid" id="pad">
+      <button class="key" data-key="1">1</button>
+      <button class="key" data-key="2">2</button>
+      <button class="key" data-key="3">3</button>
+      <button class="key" data-key="4">4</button>
+      <button class="key" data-key="5">5</button>
+      <button class="key" data-key="6">6</button>
+      <button class="key" data-key="7">7</button>
+      <button class="key" data-key="8">8</button>
+      <button class="key" data-key="9">9</button>
+      <button class="key" data-key="0">0</button>
+    </div>
+
+    <div class="small">Lembra?</div>
+  </main>
+
+  <script>
+    (function(){
+      const CODE_MAP = {
+        '0211': 'https://youtu.be/YPyBBI7Paps?si=ODHnHZR5-X84C1Jc',
+        '1985': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        '2030': 'https://www.youtube.com/watch?v=5NV6Rdv1a3I'
+      };
+
+      const display = document.getElementById('display');
+      const pad = document.getElementById('pad');
+      let digits = '';
+
+      function render(){
+        display.textContent = digits.padEnd(4, '-').split('').join(' ');
+      }
+
+      function pressKey(k){
+        if(digits.length >= 4) return;
+        if(!/^[0-9]$/.test(k)) return;
+        digits += k;
+        render();
+        if(digits.length === 4) tryResolve(digits);
+      }
+
+      function tryResolve(code){
+        const url = CODE_MAP[code];
+        if(url){
+          window.open(url, '_blank');
+          digits = '';
+          render();
+        } else {
+          display.animate([
+            { transform:'translateX(0)' },
+            { transform:'translateX(-8px)' },
+            { transform:'translateX(8px)' },
+            { transform:'translateX(0)' }
+          ], { duration:300 });
+          setTimeout(()=>{ digits=''; render(); }, 400);
+        }
+      }
+
+      pad.addEventListener('click', e=>{
+        const key = e.target.closest('button[data-key]');
+        if(key) pressKey(key.dataset.key);
+      });
+
+      window.addEventListener('keydown', ev=>{
+        if(ev.key >= '0' && ev.key <= '9'){ pressKey(ev.key); ev.preventDefault(); }
+        if(ev.key === 'Backspace'){ digits = digits.slice(0,-1); render(); ev.preventDefault(); }
+        if(ev.key === 'Enter' && digits.length === 4){ tryResolve(digits); ev.preventDefault(); }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
